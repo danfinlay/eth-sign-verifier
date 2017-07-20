@@ -2,6 +2,7 @@ var test = require('tape')
 var ethUtil = require('ethereumjs-util')
 var recoverer = require('./recoverer')
 
+/*
 test('sign and recover', function (t) {
   t.plan(1)
   const address = '0x29c76e6ad8f28bb1004902578fb108c507be341b'
@@ -16,26 +17,21 @@ test('sign and recover', function (t) {
 
   t.equal(verified, address)
 })
+*/
 
-// https://github.com/ethereum/go-ethereum/blob/f272879e5ac464b7260e898c0de0721c46d59195/crypto/crypto_test.go
-test('with go-ethereum inputs', function (t) {
-  var testAddrHex = "970e8128ab834e8eac17ab8e3812f010678cf791"
-  var testPrivHex = "289c2857d4598e37fb9647507e47a309d6133539bf21a8b9cb6df88fd5232032"
-
+test('with go-ethereum outputs', function (t) {
+  t.plan(1)
+  const address = '0x386f78eceae3db8f90e52c85533d3d6c8187e77d'
   const message = 'foo'
-  const messageHash = ethUtil.sha3(message)
+  const messageHash = '0x41b1a0649752af1b28b3dc29a1556eee781e4a4c3a1f7f53f90fa834de098c4d'
+  const signature = '0x01f9dee34e06267d413c462565f329d210926eca51b2c8f8e225921e5fa6fbb429d7e87053940b8491e7a89318dfec619046ce01a3a7b74d19574b78575613bd1b'
 
-  const sig = concatSig(ethUtil.ecsign(messageHash, privKey))
-
-  const verified = recoverer(message, sig)
-
-  t.equal(verified, address)
-
+  const accused = recoverer(message, signature)
+  t.equal(accused.toLowerCase(), address.toLowerCase(), 'accuse the right person')
 })
 
 function concatSig (sig) {
   const { v, r, s } = sig
-  console.dir({ v, r, s })
   const rSig = ethUtil.fromSigned(r)
   const sSig = ethUtil.fromSigned(s)
   const vSig = v
