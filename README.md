@@ -8,4 +8,7 @@ That said, a user made a claim on reddit with eth.sign, and when I fail to verif
 
 https://www.reddit.com/r/ethereum/comments/6obofq/a_modified_version_of_a_common_multisig_had_a/dkg4i7e/
 
-If you have good test inputs for geth's eth.sign, please add them to this repo so I can check my verification code against it.
+I've got good geth inputs in the tests now (`npm test`), but the main tool (`recoverer.js`) is failing to extract the signer's address correctly.
+
+Not sure how to verify the geth signature in JS currently.  PRs welcome!
+
